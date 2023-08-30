@@ -7,6 +7,7 @@ import Botao from './components/Botao';
 import Contador from './components/Contador';
 // import Pai from './components/direta/Pai';
 import Pai from './components/indireta/Pai';
+import ContadorV2 from './components/contador/ContadorV2';
 
 
 export default function App() {
@@ -25,7 +26,9 @@ export default function App() {
       {/* <Botao /> */}
       {/* <Contador /> */}
       {/* <Contador passo={10} inicial={10} /> */}
-      <Pai />
+      {/* <Pai /> */}
+
+      <ContadorV2 />
     </View>
   );
 }
