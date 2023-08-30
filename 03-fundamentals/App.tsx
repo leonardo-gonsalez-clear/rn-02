@@ -3,6 +3,9 @@ import Aleatorio from './components/Aleatorio';
 import Primeiro from './components/Primeiro';
 import MinMax from './components/MinMax';
 import Titulo from './components/Titulo';
+import Botao from './components/Botao';
+import Contador from './components/Contador';
+
 
 export default function App() {
 
@@ -17,6 +20,9 @@ export default function App() {
       <Primeiro />
 
       <Titulo title='Loja' subtitle='Bem-vindo à loja!' />
+      <Botao />
+
+      <Contador />
     </View>
   );
 }
