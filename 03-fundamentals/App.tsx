@@ -23,6 +23,7 @@ export default function App() {
       <Botao />
 
       <Contador />
+      <Contador passo={10} inicial={10} />
     </View>
   );
 }
