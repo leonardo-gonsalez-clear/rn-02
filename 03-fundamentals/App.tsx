@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Aleatorio from './components/Aleatorio';
 import Primeiro from './components/Primeiro';
 import MinMax from './components/MinMax';
+import Titulo from './components/Titulo';
 
 export default function App() {
 
@@ -14,6 +15,8 @@ export default function App() {
       {/* <Aleatorio min={0} max={10} /> */}
       <MinMax num1={12} num2={9} />
       <Primeiro />
+
+      <Titulo title='Loja' subtitle='Bem-vindo à loja!' />
     </View>
   );
 }
