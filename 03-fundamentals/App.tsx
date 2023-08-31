@@ -14,6 +14,7 @@ import UserLogged from './components/UserLogged';
 import ProdutoLista from './components/produtos/ProdutoLista';
 import ProdutoListaV2 from './components/produtos/ProdutoListaV2';
 import TypeYourName from './components/TypeYourName';
+import Mega from './components/mega/Mega';
 
 
 export default function App() {
@@ -46,7 +47,9 @@ export default function App() {
       {/* <ProdutoLista /> */}
       {/* <ProdutoListaV2 /> */}
 
-      <TypeYourName />
+      {/*<TypeYourName /> */}
+
+      <Mega qtdNumeros={10} />
     </View>
   );
 }
@@ -57,6 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    width: "100%"
 
   },
 });
