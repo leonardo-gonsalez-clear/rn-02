@@ -13,6 +13,7 @@ import Filho from './components/relacao/Filho';
 import UserLogged from './components/UserLogged';
 import ProdutoLista from './components/produtos/ProdutoLista';
 import ProdutoListaV2 from './components/produtos/ProdutoListaV2';
+import TypeYourName from './components/TypeYourName';
 
 
 export default function App() {
@@ -43,7 +44,9 @@ export default function App() {
       {/* <UserLogged name='leonardo' email='teste@teste.com' /> */}
 
       {/* <ProdutoLista /> */}
-      <ProdutoListaV2 />
+      {/* <ProdutoListaV2 /> */}
+
+      <TypeYourName />
     </View>
   );
 }
@@ -54,5 +57,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
 });
