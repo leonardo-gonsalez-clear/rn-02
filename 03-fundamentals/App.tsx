@@ -49,7 +49,7 @@ export default function App() {
 
       {/*<TypeYourName /> */}
 
-      <Mega qtdNumeros={10} />
+      <Mega qtdNumeros={"10"} />
     </View>
   );
 }
