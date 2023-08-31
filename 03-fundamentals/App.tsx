@@ -10,6 +10,7 @@ import Pai from './components/indireta/Pai';
 import ContadorV2 from './components/contador/ContadorV2';
 import Familia from './components/relacao/Familia';
 import Filho from './components/relacao/Filho';
+import UserLogged from './components/UserLogged';
 
 
 export default function App() {
@@ -30,12 +31,14 @@ export default function App() {
       {/* <Contador passo={10} inicial={10} /> */}
       {/* <Pai /> */}
 
-      <ContadorV2 />
+      {/* <ContadorV2 /> */}
 
-      <Familia>
-        <Filho nome='Bia' sobrenome='Arruda' />
-        <Filho nome='Carlos' sobrenome='Arruda' />
-      </Familia>
+      {/* <Familia> */}
+      {/*   <Filho nome='Bia' sobrenome='Arruda' /> */}
+      {/*   <Filho nome='Carlos' sobrenome='Arruda' /> */}
+      {/* </Familia> */}
+
+      <UserLogged name='leonardo' email='teste@teste.com' />
     </View>
   );
 }
