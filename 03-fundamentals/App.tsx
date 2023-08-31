@@ -11,6 +11,8 @@ import ContadorV2 from './components/contador/ContadorV2';
 import Familia from './components/relacao/Familia';
 import Filho from './components/relacao/Filho';
 import UserLogged from './components/UserLogged';
+import ProdutoLista from './components/produtos/ProdutoLista';
+import ProdutoListaV2 from './components/produtos/ProdutoListaV2';
 
 
 export default function App() {
@@ -38,7 +40,10 @@ export default function App() {
       {/*   <Filho nome='Carlos' sobrenome='Arruda' /> */}
       {/* </Familia> */}
 
-      <UserLogged name='leonardo' email='teste@teste.com' />
+      {/* <UserLogged name='leonardo' email='teste@teste.com' /> */}
+
+      {/* <ProdutoLista /> */}
+      <ProdutoListaV2 />
     </View>
   );
 }
