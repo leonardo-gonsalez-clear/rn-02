@@ -55,9 +55,9 @@ export default function App() {
   }
 
   const addDigit = (n: string) => {
-    if (n === "." && display.includes(".")) return
 
     const shouldClearDisplay = display === "0" || clearDisplay
+    if (n === "." && !shouldClearDisplay && display.includes(".")) return
     const currentValue = shouldClearDisplay ? "" : display
     const displayValue = currentValue + n
 
