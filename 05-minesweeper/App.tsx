@@ -9,9 +9,13 @@ export default function App() {
       <Text>Iniciando o Mines!</Text>
       <Text>Tamanho da grade: {params.getRowsAmount()} x {params.getCollumnsAmount()}</Text>
 
+      <Field nearMines={1} opened={true} mined={false} />
+      <Field nearMines={4} opened={true} mined={false} />
       <Field nearMines={8} opened={true} mined={false} />
+      <Field nearMines={8} opened={false} mined={false} flagged={true} />
       <Field nearMines={2} opened={false} mined={false} />
-      <Field nearMines={2} opened={false} mined={true} />
+      <Field nearMines={2} opened={true} mined={true} />
+      <Field nearMines={2} opened={true} mined={true} exploded />
 
     </View>
   );

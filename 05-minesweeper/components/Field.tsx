@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import params from './params'
 import Mine from './Mine'
+import Flag from './Flag'
 
 
 interface Props {
@@ -9,11 +10,12 @@ interface Props {
   mined: boolean
   nearMines: number
   exploded?: boolean
+  flagged?: boolean
 }
 
-const Field = ({ mined, opened, nearMines, exploded }: Props) => {
+const Field = ({ mined, opened, nearMines, exploded, flagged }: Props) => {
 
-  const styleField = [styles.field, opened && styles.opened, styles.regular, mined && exploded && styles.exploded]
+  const styleField = [styles.field, opened && styles.opened, styles.regular, mined && exploded && styles.exploded, flagged && styles.flagged]
 
   const color = {
     [1]: '#2A28D7',
@@ -35,6 +37,7 @@ const Field = ({ mined, opened, nearMines, exploded }: Props) => {
       }
 
       {mined && opened ? <Mine /> : false}
+      {flagged && !opened ? <Flag /> : false}
     </View >
   )
 }
@@ -67,5 +70,8 @@ const styles = StyleSheet.create({
   exploded: {
     backgroundColor: 'red',
     borderColor: 'red',
+  },
+  flagged: {
+
   }
 })
