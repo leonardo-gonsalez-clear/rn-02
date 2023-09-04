@@ -90,4 +90,18 @@ const pendding = (field: ICell) => (field.mined && !field.flagged) || (!field.mi
 const wonGame = (board: ICell[][]) => fields(board).filter(pendding).length === 0
 const showMines = (board: ICell[][]) => fields(board).filter(field => field.mined).forEach(field => field.opened = true)
 
-export { createMinedBoard as default, cloneBoard, openField, hadExplosion, wonGame, showMines }
+const invertFlag = (board: ICell[][], row: number, column: number) => {
+  const field = board[row][column]
+  field.flagged = !field.flagged
+}
+
+
+export {
+  createMinedBoard as default,
+  cloneBoard,
+  openField,
+  hadExplosion,
+  wonGame,
+  showMines,
+  invertFlag
+}

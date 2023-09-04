@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import params from './components/params';
 import Field from './components/Field';
-import createMinedBoard, { openField, cloneBoard, hadExplosion, wonGame, showMines } from './components/functions';
+import createMinedBoard, { openField, cloneBoard, hadExplosion, wonGame, showMines, invertFlag } from './components/functions';
 import React from 'react'
 import MineField from './components/MineField';
 
@@ -47,13 +47,24 @@ export default function App() {
     setWon(won)
   }
 
+  const onSelectField = (row: number, column: number) => {
+    const boardCloned = cloneBoard(board.board)
+    invertFlag(boardCloned, row, column)
+    const won = wonGame(boardCloned)
+    if (won) {
+      Alert.alert('Parabéns', 'Você venceu!')
+    }
+    setBoard({ board: boardCloned })
+    setWon(won)
+  }
+
   return (
     <View style={styles.container}>
       <Text>Iniciando o Mines!</Text>
       <Text>Tamanho da grade: {params.getRowsAmount()} x {params.getCollumnsAmount()}</Text>
 
       <View>
-        <MineField board={board.board} onOpenField={onOpenField} />
+        <MineField board={board.board} onOpenField={onOpenField} onSelectField={onSelectField} />
       </View>
     </View>
   );

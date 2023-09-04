@@ -12,9 +12,10 @@ interface Props {
   exploded?: boolean
   flagged?: boolean
   onOpen: () => void
+  onSelect: () => void
 }
 
-const Field = ({ mined, opened, nearMines, exploded, flagged, onOpen }: Props) => {
+const Field = ({ mined, opened, nearMines, exploded, flagged, onOpen, onSelect }: Props) => {
 
   const styleField = [styles.field, opened && styles.opened, styles.regular, mined && exploded && styles.exploded, flagged && styles.flagged]
 
@@ -30,7 +31,7 @@ const Field = ({ mined, opened, nearMines, exploded, flagged, onOpen }: Props) =
   }
 
   return (
-    <TouchableWithoutFeedback onPress={onOpen}>
+    <TouchableWithoutFeedback onPress={onOpen} onLongPress={onSelect} delayLongPress={200}>
       <View style={[styleField]}>
         {!mined && opened && nearMines > 0 ? (
           <Text style={[styles.label, { color: color[nearMines as keyof typeof color] }]}>
