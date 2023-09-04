@@ -1,27 +1,40 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import params from './params'
+import Mine from './Mine'
 
 
 interface Props {
   opened: boolean
   mined: boolean
   nearMines: number
+  exploded?: boolean
 }
 
-const Field = ({ mined, opened, nearMines }: Props) => {
+const Field = ({ mined, opened, nearMines, exploded }: Props) => {
 
-  const styleField = [styles.field, opened && styles.opened, styles.regular]
+  const styleField = [styles.field, opened && styles.opened, styles.regular, mined && exploded && styles.exploded]
 
   const color = {
     [1]: '#2A28D7',
     [2]: '#2B520F',
-    [3 || 4 || 5]: '#F9060A',
-    [6 || 7 || 8]: '#F221A9',
+    [3]: '#F9060A',
+    [4]: '#F221A9',
+    [5]: '#F221A9',
+    [6]: '#F221A9',
+    [7]: '#F221A9',
+    [8]: '#F221A9',
   }
 
   return (
-    <View style={[styleField, { backgroundColor: color[2] }]}>
+    <View style={[styleField]}>
+      {!mined && opened && nearMines > 0 ? (
+        <Text style={[styles.label, { color: color[nearMines as keyof typeof color] }]}>
+          {nearMines}</Text>
+      ) : false
+      }
+
+      {mined && opened ? <Mine /> : false}
     </View >
   )
 }
@@ -42,5 +55,17 @@ const styles = StyleSheet.create({
     borderBottomColor: '#333',
   },
   opened: {
+    backgroundColor: '#999',
+    borderColor: '#777',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  label: {
+    fontWeight: 'bold',
+    fontSize: params.fontSize,
+  },
+  exploded: {
+    backgroundColor: 'red',
+    borderColor: 'red',
   }
 })
