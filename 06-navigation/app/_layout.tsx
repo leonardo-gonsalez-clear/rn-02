@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, Tabs } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import { Drawer } from "expo-router/drawer"
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,12 +47,12 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Tabs /* screenOptions={{ contentStyle: { flex: 1 } }} */ initialRouteName='TelaA'>
-        <Tabs.Screen name='index' redirect />
-        <Tabs.Screen name="TelaA" />
-        <Tabs.Screen name="TelaB" />
-        <Tabs.Screen name="TelaC" />
-      </Tabs>
+      <Drawer /* screenOptions={{ contentStyle: { flex: 1 } }} */ initialRouteName='TelaA'>
+        <Drawer.Screen name='index' redirect />
+        <Drawer.Screen name="TelaA" />
+        <Drawer.Screen name="TelaB" />
+        <Drawer.Screen name="TelaC" />
+      </Drawer>
     </ThemeProvider>
   );
 }
