@@ -15,20 +15,21 @@ interface Props {
   onSelect: () => void
 }
 
+const color = {
+  [1]: '#2A28D7',
+  [2]: '#2B520F',
+  [3]: '#F9060A',
+  [4]: '#F221A9',
+  [5]: '#F221A9',
+  [6]: '#F221A9',
+  [7]: '#F221A9',
+  [8]: '#F221A9',
+}
+
 const Field = ({ mined, opened, nearMines, exploded, flagged, onOpen, onSelect }: Props) => {
 
   const styleField = [styles.field, opened && styles.opened, styles.regular, mined && exploded && styles.exploded, flagged && styles.flagged]
 
-  const color = {
-    [1]: '#2A28D7',
-    [2]: '#2B520F',
-    [3]: '#F9060A',
-    [4]: '#F221A9',
-    [5]: '#F221A9',
-    [6]: '#F221A9',
-    [7]: '#F221A9',
-    [8]: '#F221A9',
-  }
 
   return (
     <TouchableWithoutFeedback onPress={onOpen} onLongPress={onSelect} delayLongPress={200}>

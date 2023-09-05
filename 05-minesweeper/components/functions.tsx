@@ -95,6 +95,8 @@ const invertFlag = (board: ICell[][], row: number, column: number) => {
   field.flagged = !field.flagged
 }
 
+const flagsUsed = (board: ICell[][]) => fields(board).filter(field => field.flagged).length
+
 
 export {
   createMinedBoard as default,
@@ -103,5 +105,6 @@ export {
   hadExplosion,
   wonGame,
   showMines,
-  invertFlag
+  invertFlag,
+  flagsUsed
 }
