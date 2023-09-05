@@ -13,6 +13,7 @@ const TelaA = () => {
     <View style={{ flex: 1 }}>
       <TextoCentral color='#f00'>TELA A</TextoCentral>
       <Button title='Avançar' onPress={() => router.push("/TelaB")} />
+      <Button title='Voltar' onPress={() => router.back()} />
     </View>
   )
 }
