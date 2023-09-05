@@ -1,7 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, Tabs } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
@@ -46,12 +46,12 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ contentStyle: { flex: 1 } }} initialRouteName='TelaA'>
-        <Stack.Screen name='index' redirect />
-        <Stack.Screen name="TelaA" />
-        <Stack.Screen name="TelaB" />
-        <Stack.Screen name="TelaC" />
-      </Stack>
+      <Tabs /* screenOptions={{ contentStyle: { flex: 1 } }} */ initialRouteName='TelaA'>
+        <Tabs.Screen name='index' redirect />
+        <Tabs.Screen name="TelaA" />
+        <Tabs.Screen name="TelaB" />
+        <Tabs.Screen name="TelaC" />
+      </Tabs>
     </ThemeProvider>
   );
 }
