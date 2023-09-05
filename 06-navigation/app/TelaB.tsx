@@ -9,7 +9,10 @@ const TelaB = () => {
   return (
     <View style={{ flex: 1 }}>
       <TextoCentral color='#00f'>TELA B</TextoCentral>
-      <Button title='Avançar' onPress={() => router.push("/TelaC")} />
+      <Button title='Avançar' onPress={() => {
+        router.setParams({ num: String(Math.random() * 100) })
+        router.push("/TelaC")
+      }} />
       <Button title='Voltar' onPress={() => router.back()} />
     </View>
   )
