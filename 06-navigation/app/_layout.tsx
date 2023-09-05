@@ -49,8 +49,8 @@ function RootLayoutNav() {
       <Stack screenOptions={{ contentStyle: { flex: 1 } }} initialRouteName='TelaA'>
         <Stack.Screen name='index' redirect />
         <Stack.Screen name="TelaA" />
-        <Stack.Screen name="TelaB" options={{ headerShown: false }} />
-        <Stack.Screen name="TelaC" options={{ headerShown: false }} />
+        <Stack.Screen name="TelaB" />
+        <Stack.Screen name="TelaC" />
       </Stack>
     </ThemeProvider>
   );
