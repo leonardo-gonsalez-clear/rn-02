@@ -1,14 +1,24 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
+import { useLocalSearchParams } from 'expo-router';
+import { useMemo } from 'react';
+import users from '../../data/users';
 
 export default function TabTwoScreen() {
+  const { user } = useLocalSearchParams()
+  const userData = useMemo(() => {
+    return users.find(u => u.name === user)
+  }, [user])
+
+  console.log(userData)
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
+      <Image source={{ uri: userData?.avatarUrl, width: 100, height: 100 }} />
+      <Text style={styles.title}>{userData?.name}</Text>
+      <Text style={styles.title}>{userData?.email}</Text>
     </View>
   );
 }
