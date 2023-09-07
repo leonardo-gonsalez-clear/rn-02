@@ -22,7 +22,9 @@ export default function TabTwoScreen() {
   const handleSave = () => {
 
     const removedUser = users.filter(u => Number(u.id) !== Number(user.id))
-    setData([...removedUser, currentUser])
+    setData([...removedUser, user.id
+      ? currentUser
+      : { ...currentUser, id: String(users.length + 1) }])
 
     router.back()
   }
