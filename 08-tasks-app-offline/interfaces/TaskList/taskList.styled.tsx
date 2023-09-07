@@ -10,10 +10,6 @@ justify-content: flex-end;
 padding: 12px;
 `
 
-export const Content = styled.View`
-flex: 7;
-padding: 12px;
-`
 
 export const Title = styled.Text`
   font-family: "Lato";
@@ -29,3 +25,8 @@ export const SubTitle = styled.Text`
   font-weight: bold;
 
 `
+export const Content = styled.View`
+flex: 7;
+padding: 12px;
+`
+
