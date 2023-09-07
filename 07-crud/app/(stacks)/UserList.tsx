@@ -3,20 +3,21 @@ import { StyleSheet, Image, TouchableOpacity, Button } from 'react-native';
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import { FlatList } from 'react-native-gesture-handler';
-import users from '../../data/users';
 import { useRouter } from 'expo-router';
 import React from 'react';
+import { IUser } from './UserForm';
+import useStore from '../../components/useStore';
 
 export default function TabOneScreen() {
+  const users = useStore(state => state.data)
+  const setUsers = useStore(state => state.setData)
   const router = useRouter()
-  const [data, setData] = React.useState(users)
 
   return (
     <View style={styles.container}>
-      <FlatList contentContainerStyle={{ gap: 16 }} keyExtractor={({ id }) => String(id)} data={data} renderItem={({ item }) => (
+      <FlatList contentContainerStyle={{ gap: 16 }} keyExtractor={({ id }) => String(id)} data={users} renderItem={({ item }) => (
         <TouchableOpacity
           style={{ flexDirection: "row", gap: 8 }}
-          onPress={() => router.push({ pathname: "/(stacks)/UserForm", params: { user: item.name } })}
         >
           <Image source={{ uri: item.avatarUrl, width: 75, height: 75 }} style={{ borderRadius: 8 }} />
           <View style={{ gap: 4, flex: 1 }}>
@@ -25,8 +26,8 @@ export default function TabOneScreen() {
           </View>
 
           <View style={{ flexDirection: "row", gap: 8, alignItems: "flex-start" }}>
-            <Button title='E' color={"#00f"} />
-            <Button title='D' color={"#f00"} onPress={() => setData(prev => prev.filter(i => i !== item))} />
+            <Button title='E' color={"#00f"} onPress={() => router.push({ pathname: "/(stacks)/UserForm", params: item })} />
+            <Button title='D' color={"#f00"} onPress={() => setUsers(users.filter(i => i !== item))} />
           </View>
         </TouchableOpacity>
       )} />
