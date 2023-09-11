@@ -4,22 +4,11 @@ import { BgImage, Container, Content, SubTitle, Title } from './taskList.styled'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import Task from '../../components/Task/Task'
+import useTasksStore from "../../stores/useTasksStore"
 
-const data: ITask[] = [
-  {
-    id: Math.random(),
-    title: 'Fazer mudança',
-    doneAt: new Date(),
-    estimateAt: new Date()
-  },
-  {
-    id: Math.random(),
-    title: 'Faxina',
-    estimateAt: new Date()
-  }
-]
 
 const TaskList = () => {
+  const tasks = useTasksStore(state => state.tasks)
 
   const today = format(new Date(), "dd 'de' MMMM", { locale: ptBR })
   return (
@@ -30,7 +19,7 @@ const TaskList = () => {
       </BgImage>
 
       <Content
-        data={data}
+        data={tasks}
         keyExtractor={item => String(item.id)}
         renderItem={({ item }) => <Task {...item} />} />
     </Container>

@@ -18,7 +18,7 @@ export const Content = styled.View`
 flex: 9;
 justify-content: center;
 justify-self: center;
-padding: 10px;
+padding: 8px;
 `
 
 export const Title = styled.Text<{ doneAt?: Date }>`
