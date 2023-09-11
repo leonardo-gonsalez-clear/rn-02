@@ -9,6 +9,7 @@ export const BgImage = styled.ImageBackground`
 flex: 3;
 justify-content: flex-end;
 padding: 12px;
+position: relative;
 `
 
 
@@ -28,5 +29,12 @@ export const SubTitle = styled.Text`
 `
 export const Content = styled(FlatList<ITask>)`
 flex: 7;
+`
+
+export const IconBar = styled.TouchableOpacity`
+  flex-direction: row;
+  position: absolute;
+  top: 12px;
+  right: 12px;
 `
 
