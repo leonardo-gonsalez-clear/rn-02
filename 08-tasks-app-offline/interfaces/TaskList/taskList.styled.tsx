@@ -27,6 +27,5 @@ export const SubTitle = styled.Text`
 `
 export const Content = styled.View`
 flex: 7;
-padding: 12px;
 `
 

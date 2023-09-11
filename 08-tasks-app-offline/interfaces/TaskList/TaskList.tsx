@@ -16,7 +16,14 @@ const TaskList = () => {
       </BgImage>
 
       <Content>
-        <Task />
+        <Task
+          title='Fazer mudança'
+          estimateAt={new Date()}
+          doneAt={new Date} />
+        <Task
+          title='Fazer mudança'
+          estimateAt={new Date()}
+        />
       </Content>
     </Container>
   )
