@@ -1,3 +1,4 @@
+import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -25,7 +26,7 @@ export const SubTitle = styled.Text`
   font-weight: bold;
 
 `
-export const Content = styled.View`
+export const Content = styled(FlatList<ITask>)`
 flex: 7;
 `
 

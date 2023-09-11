@@ -5,6 +5,20 @@ import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import Task from '../../components/Task/Task'
 
+const data: ITask[] = [
+  {
+    id: Math.random(),
+    title: 'Fazer mudança',
+    doneAt: new Date(),
+    estimateAt: new Date()
+  },
+  {
+    id: Math.random(),
+    title: 'Faxina',
+    estimateAt: new Date()
+  }
+]
+
 const TaskList = () => {
 
   const today = format(new Date(), "dd 'de' MMMM", { locale: ptBR })
@@ -15,16 +29,10 @@ const TaskList = () => {
         <Title>{today}</Title>
       </BgImage>
 
-      <Content>
-        <Task
-          title='Fazer mudança'
-          estimateAt={new Date()}
-          doneAt={new Date} />
-        <Task
-          title='Fazer mudança'
-          estimateAt={new Date()}
-        />
-      </Content>
+      <Content
+        data={data}
+        keyExtractor={item => String(item.id)}
+        renderItem={({ item }) => <Task {...item} />} />
     </Container>
   )
 }

@@ -5,11 +5,7 @@ import Octicons from '@expo/vector-icons/Octicons'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
-interface Props {
-  title: string
-  estimateAt: Date
-  doneAt?: Date
-}
+type Props = Omit<ITask, "id">
 
 const Task = ({ title, estimateAt, doneAt }: Props) => {
   const date = format(estimateAt, "EEEEEE',' dd 'de' MMMM", { locale: ptBR })
