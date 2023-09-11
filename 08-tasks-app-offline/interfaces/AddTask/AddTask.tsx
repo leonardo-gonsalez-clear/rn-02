@@ -12,7 +12,7 @@ const AddTask = ({ isVisible, onClose }: Props) => {
   const [task, setTask] = React.useState<string>("")
 
   return (
-    <Modal visible={isVisible} transparent animationType='slide'>
+    <Modal visible={isVisible} transparent animationType='fade'>
       <TouchableWithoutFeedback onPress={onClose}>
         <Container>
           <Wrapper activeOpacity={1}>

@@ -1,6 +1,6 @@
-import { View, Text, ImageBackground } from 'react-native'
+import { View, Text, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { BgImage, Container, Content, IconBar, SubTitle, Title } from './taskList.styled'
+import { BgImage, Container, Content, IconAdd, IconBar, SubTitle, Title } from './taskList.styled'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import Task from '../../components/Task/Task'
@@ -12,7 +12,7 @@ import AddTask from '../AddTask/AddTask'
 const TaskList = () => {
   const tasks = useTasksStore(state => state.tasks)
   const [tasksVisible, setTasksVisible] = React.useState(true)
-  const [modalVisible, setModalVisible] = React.useState(true)
+  const [modalVisible, setModalVisible] = React.useState(false)
   const today = format(new Date(), "dd 'de' MMMM", { locale: ptBR })
 
   const handleToggleTasks = () => {
@@ -29,7 +29,10 @@ const TaskList = () => {
 
   return (
     <Container>
-      <AddTask isVisible={modalVisible} onClose={() => setModalVisible(false)} />
+      <AddTask
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
       <BgImage source={require("../../assets/images/today.jpg")}>
         <IconBar onPress={handleToggleTasks}>
           <Octicons
@@ -40,11 +43,16 @@ const TaskList = () => {
         <SubTitle>Hoje</SubTitle>
         <Title>{today}</Title>
       </BgImage>
+      <Content style={{ flex: 7 }}>
+        <FlatList
+          data={filteredTasks}
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) => <Task {...item} />} />
+      </Content>
 
-      <Content
-        data={filteredTasks}
-        keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => <Task {...item} />} />
+      <IconAdd onPress={() => setModalVisible(true)} activeOpacity={0.7}>
+        <Octicons name='plus' size={25} color={"#fff"} />
+      </IconAdd>
     </Container>
   )
 }

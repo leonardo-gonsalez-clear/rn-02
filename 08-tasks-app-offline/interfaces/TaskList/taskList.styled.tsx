@@ -1,5 +1,6 @@
 import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
+import theme from '../../constants/colors';
 
 export const Container = styled.View`
 flex: 1;
@@ -27,7 +28,7 @@ export const SubTitle = styled.Text`
   font-weight: bold;
 
 `
-export const Content = styled(FlatList<ITask>)`
+export const Content = styled.View`
 flex: 7;
 `
 
@@ -37,4 +38,19 @@ export const IconBar = styled.TouchableOpacity`
   top: 12px;
   right: 12px;
 `
+
+export const IconAdd = styled.TouchableOpacity`
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background-color: ${theme.colors.today};
+  border-radius: 25px;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+`
+
+
+
 
