@@ -2,6 +2,8 @@ import { View, Text, Modal, TouchableWithoutFeedback } from 'react-native'
 import React from 'react'
 import { Btn, BtnText, ButtonWrapper, Container, Content, Header, HeaderText, Input, Wrapper } from './addTask.styled'
 import theme from '../../constants/colors'
+import DateTimePicker from '../../components/DateTimePicker/DateTimePicker'
+import useTasksStore from '../../stores/useTasksStore'
 
 interface Props {
   isVisible: boolean
@@ -9,7 +11,24 @@ interface Props {
 }
 
 const AddTask = ({ isVisible, onClose }: Props) => {
-  const [task, setTask] = React.useState<string>("")
+  const [title, setTitle] = React.useState<string>("")
+  const [date, setDate] = React.useState<Date>(new Date())
+  const tasks = useTasksStore(state => state.tasks)
+  const setTasks = useTasksStore(state => state.setTasks)
+
+  const handleAddTask = () => {
+    const taskToAdd: ITask = {
+      id: Math.random(),
+      title: title,
+      estimateAt: date,
+      doneAt: undefined
+    }
+
+    setTasks([...tasks, taskToAdd])
+    setTitle("")
+    setDate(new Date())
+    onClose()
+  }
 
   return (
     <Modal visible={isVisible} transparent animationType='fade'>
@@ -22,9 +41,11 @@ const AddTask = ({ isVisible, onClose }: Props) => {
             <Content>
               <Input
                 placeholder='Adicionar tarefa...'
-                onChangeText={(t) => setTask(t)}
-                value={task}
+                onChangeText={(t) => setTitle(t)}
+                value={title}
               />
+
+              <DateTimePicker date={date} setDate={setDate} />
               <ButtonWrapper>
                 <Btn style={{ backgroundColor: "transparent" }}>
                   <BtnText
@@ -35,7 +56,7 @@ const AddTask = ({ isVisible, onClose }: Props) => {
                   </BtnText>
                 </Btn>
                 <Btn>
-                  <BtnText>Adicionar</BtnText>
+                  <BtnText onPress={handleAddTask}>Adicionar</BtnText>
                 </Btn>
               </ButtonWrapper>
             </Content>
