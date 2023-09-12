@@ -11,9 +11,16 @@ import AddTask from '../AddTask/AddTask'
 
 const TaskList = () => {
   const tasks = useTasksStore(state => state.tasks)
+  const setTasks = useTasksStore(state => state.setTasks)
   const [tasksVisible, setTasksVisible] = React.useState(true)
   const [modalVisible, setModalVisible] = React.useState(false)
   const today = format(new Date(), "dd 'de' MMMM", { locale: ptBR })
+
+  const handleDeleteTask = (id: number | string) => {
+    const filteredTasks = tasks.filter(task => task.id !== id)
+
+    setTasks(filteredTasks)
+  }
 
   const handleToggleTasks = () => {
     setTasksVisible(!tasksVisible)
@@ -47,7 +54,7 @@ const TaskList = () => {
         <FlatList
           data={filteredTasks}
           keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => <Task {...item} />} />
+          renderItem={({ item }) => <Task {...item} onDelete={handleDeleteTask} />} />
       </Content>
 
       <IconAdd onPress={() => setModalVisible(true)} activeOpacity={0.7}>

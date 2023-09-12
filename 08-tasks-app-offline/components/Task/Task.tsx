@@ -1,30 +1,59 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { CheckContainer, Container, Content, EstimateDate, Title } from './task.styled'
+import { CheckContainer, Container, Content, EstimateDate, LeftSwipeableContainer, RightSwipeableContainer, Title } from './task.styled'
 import Octicons from '@expo/vector-icons/Octicons'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import useTasksStore from '../../stores/useTasksStore'
+import Swipeable from "react-native-gesture-handler/Swipeable"
 
-type Props = ITask
+type Props = ITask & {
+  onDelete: (id: number | string) => void
+}
 
-const Task = ({ title, estimateAt, doneAt, id }: Props) => {
+const Task = ({ title, estimateAt, doneAt, id, onDelete }: Props) => {
   const date = format(estimateAt, "EEEEEE',' dd 'de' MMMM", { locale: ptBR })
   const task = { title, estimateAt, doneAt, id }
+
+  const handleRightAction = () => {
+
+    return (
+      <RightSwipeableContainer onPress={() => onDelete(id)}>
+        <Octicons name='trash' color={"#fff"} size={25} />
+      </RightSwipeableContainer>
+    )
+  }
+
+  const handleLeftAction = () => {
+
+    return (
+      <LeftSwipeableContainer>
+        <Octicons name='trash' color={"#fff"} size={25} />
+        <Text style={{ color: "#fff" }}>Excluir</Text>
+      </LeftSwipeableContainer>
+    )
+  }
+
   return (
-    <Container>
-      <CheckTask {...task} />
-      <Content>
-        <Title doneAt={doneAt}>{title}</Title>
-        <EstimateDate>
-          {date}
-        </EstimateDate>
-      </Content>
-    </Container>
+    <Swipeable
+      renderRightActions={handleRightAction}
+      renderLeftActions={handleLeftAction}
+      onSwipeableOpen={(d) => d === "left" && onDelete(id)}
+    >
+      <Container>
+        <CheckTask {...task} />
+        <Content>
+          <Title doneAt={doneAt}>{title}</Title>
+          <EstimateDate>
+            {date}
+          </EstimateDate>
+        </Content>
+      </Container>
+    </Swipeable>
   )
 }
 
-const CheckTask = ({ estimateAt, title, doneAt, id }: Props) => {
+const CheckTask = ({ estimateAt, title, doneAt, id }: ITask) => {
   const tasks = useTasksStore(state => state.tasks)
   const setTasks = useTasksStore(state => state.setTasks)
 
