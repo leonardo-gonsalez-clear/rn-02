@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-const data: ITask[] = [
+export const data: ITask[] = [
   {
     id: Math.random(),
     title: 'Fazer mudança',
@@ -20,7 +20,7 @@ interface ITasksStore {
 }
 
 const useTasksStore = create<ITasksStore>((set) => ({
-  tasks: data,
+  tasks: [],
   setTasks: (tasks) => set({ tasks }),
 }))
 
