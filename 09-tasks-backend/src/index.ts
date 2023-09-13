@@ -2,7 +2,9 @@ import Express from "express";
 import cors from "cors";
 import routes from "./routes";
 import { db2 } from "./config/db";
-import { Knex } from "knex";
+import "express-async-errors"
+import "dotenv/config"
+import "reflect-metadata"
 
 const app = Express();
 
