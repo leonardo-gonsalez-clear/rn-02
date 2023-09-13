@@ -6,7 +6,7 @@ export default {
   connection: {
     database: 'tasks',
     user: 'postgres',
-    password: '123'
+    password: '1234'
   },
   pool: {
     min: 2,
