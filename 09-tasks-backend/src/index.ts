@@ -1,12 +1,19 @@
 import Express from "express";
 import cors from "cors";
 import routes from "./routes";
+import { db2 } from "./config/db";
+import { Knex } from "knex";
 
 const app = Express();
 
-app.use(cors())
+app.use(cors({ origin: "*" }))
 app.use(Express.json())
 app.use(Express.urlencoded({ extended: true }))
+
+app.use(async (req, res, next) => {
+  req.app.locals.db = db2
+  next()
+})
 
 app.use(routes)
 
@@ -15,5 +22,5 @@ app.get("/", (req, res) => {
 })
 
 app.listen(3000, () => {
-  console.log("Server is running");
+  console.log("🔥 Server is running on http://localhost:3000");
 })
