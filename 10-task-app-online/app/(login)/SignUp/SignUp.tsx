@@ -14,6 +14,18 @@ const SignUp = () => {
   })
   const router = useRouter()
 
+  const validForm = React.useMemo(() => {
+    const validations = []
+
+    validations.push(data.email?.length > 0
+      && data.email?.includes("@")
+      && data.email?.split("@")[1].includes("."))
+    validations.push(data.password?.length >= 6)
+    validations.push(data.name?.length > 0)
+
+    return validations.reduce((acc, cur) => acc && cur)
+  }, [data])
+
   const handleLogin = () => {
     console.log(data)
 
@@ -42,7 +54,7 @@ const SignUp = () => {
           <Input
             placeholder='***********'
             onChangeText={(v) => setData(prev => ({ ...prev, password: v }))} />
-          <Button title='Criar' onPress={handleLogin} />
+          <Button title='Criar' onPress={handleLogin} disabled={!validForm} color={validForm ? "#00B" : "#AAA"} />
           <Button title='Já tenho uma conta' onPress={() => router.push("/SignIn/")} />
         </Form>
       </Content>
