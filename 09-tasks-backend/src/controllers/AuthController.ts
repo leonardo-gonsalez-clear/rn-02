@@ -9,10 +9,10 @@ class AuthController {
     const secret = process.env.AUTH_SECRET
     const db = req.app.locals.db
 
-    if (!email || !password) return res.status(400).json({ error: "missing params" })
 
+    if (!email || !password) return res.status(400).json({ error: "missing params" })
     const user = await db("users")
-      .where("email", email)
+      .whereILike("email", email)
       .first()
 
     if (!user) return res.status(404).json({ error: "user not found" })
