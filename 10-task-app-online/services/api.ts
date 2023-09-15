@@ -12,13 +12,13 @@ const api = axios.create({
 
 })
 
-const apiAuth = axios.create({
+const apiAuth = async () => axios.create({
   baseURL: Platform.OS === "android" ? "http://10.0.2.2:3000" : "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
     "data-type": "jsonp",
     "Access-Control-Allow-Origin": "*",
-    "Authorization": `Bearer ${(async () => { return await AsyncStorage.getItem("token") })()}`
+    "Authorization": `Bearer ${await AsyncStorage.getItem("token")}`
   }
 })
 

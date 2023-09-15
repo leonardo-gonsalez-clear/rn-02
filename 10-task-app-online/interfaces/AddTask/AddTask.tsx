@@ -17,12 +17,11 @@ const AddTask = ({ isVisible, onClose }: Props) => {
   const setTasks = useTasksStore(state => state.setTasks)
 
   const handleAddTask = () => {
-
     if (!title.trim()) return
 
     const taskToAdd: ITask = {
       id: Math.random(),
-      title: title.trim(),
+      description: title.trim(),
       estimateAt: date,
       doneAt: undefined
     }

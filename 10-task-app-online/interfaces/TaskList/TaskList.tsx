@@ -1,13 +1,14 @@
 import { View, Text, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { BgImage, Container, Content, IconAdd, IconBar, SubTitle, Title } from './taskList.styled'
-import { format } from 'date-fns'
+import { endOfDay, format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import Task from '../../components/Task/Task'
 import useTasksStore, { data } from "../../stores/useTasksStore"
 import Octicons from '@expo/vector-icons/Octicons'
 import AddTask from '../AddTask/AddTask'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { apiAuth } from '../../services/api'
 
 const prevTasks = AsyncStorage.getItem("tasks").then(res => res ? JSON.parse(res) : [])
 
@@ -42,6 +43,22 @@ const TaskList = () => {
 
     !filteredTasks.length && AsyncStorage.setItem("tasks", JSON.stringify(filteredTasks)).then(() => console.log("tasks saved"))
   }, [tasks, tasksVisible])
+
+  const getTasks = async () => {
+    const maxDate = format(endOfDay(new Date()), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
+    console.log(endOfDay(new Date()))
+    try {
+      const data: ITask[] = await (await apiAuth()).get(`/tasks?date=${maxDate}`).then(res => res.data)
+      console.log(data)
+      setTasks(data)
+    } catch (err) {
+      console.log(err.request)
+    }
+  }
+
+  React.useEffect(() => {
+    getTasks()
+  }, [])
 
   // React.useEffect(() => {
   //   const getTasks = async () => {

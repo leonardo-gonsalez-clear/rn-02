@@ -11,9 +11,9 @@ type Props = ITask & {
   onDelete: (id: number | string) => void
 }
 
-const Task = ({ title, estimateAt, doneAt, id, onDelete }: Props) => {
-  const date = format(estimateAt, "EEEEEE',' dd 'de' MMMM", { locale: ptBR })
-  const task = { title, estimateAt, doneAt, id }
+const Task = ({ description, estimateAt, doneAt, id, onDelete }: Props) => {
+  const date = format(new Date(estimateAt), "EEEEEE',' dd 'de' MMMM", { locale: ptBR })
+  const task = { description, estimateAt, doneAt, id }
 
   const handleRightAction = () => {
 
@@ -43,7 +43,7 @@ const Task = ({ title, estimateAt, doneAt, id, onDelete }: Props) => {
       <Container>
         <CheckTask {...task} />
         <Content>
-          <Title doneAt={doneAt}>{title}</Title>
+          <Title doneAt={doneAt}>{description}</Title>
           <EstimateDate>
             {date}
           </EstimateDate>
@@ -53,12 +53,11 @@ const Task = ({ title, estimateAt, doneAt, id, onDelete }: Props) => {
   )
 }
 
-const CheckTask = ({ estimateAt, title, doneAt, id }: ITask) => {
+const CheckTask = ({ estimateAt, description, doneAt, id }: ITask) => {
   const tasks = useTasksStore(state => state.tasks)
   const setTasks = useTasksStore(state => state.setTasks)
 
   const handleCheck = () => {
-    console.log(title)
 
     const checkedTask = tasks.map(t => t.id === id ? { ...t, doneAt: doneAt ? null : new Date() } : t)
 
