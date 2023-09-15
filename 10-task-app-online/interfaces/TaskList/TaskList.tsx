@@ -9,6 +9,7 @@ import Octicons from '@expo/vector-icons/Octicons'
 import AddTask from '../AddTask/AddTask'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+const prevTasks = AsyncStorage.getItem("tasks").then(res => res ? JSON.parse(res) : [])
 
 const TaskList = () => {
   const tasks = useTasksStore(state => state.tasks)
@@ -42,21 +43,21 @@ const TaskList = () => {
     !filteredTasks.length && AsyncStorage.setItem("tasks", JSON.stringify(filteredTasks)).then(() => console.log("tasks saved"))
   }, [tasks, tasksVisible])
 
-  React.useEffect(() => {
-    const getTasks = async () => {
-      const newTasks: ITask[] = await AsyncStorage.getItem("tasks").then(res => res ? JSON.parse(res) : [])
-      if (!newTasks.length) return setTasks(data)
-      console.log(newTasks)
-      if (tasks.length) {
-        // console.log(tasks.map(t => ({ ...t, estimateAt: new Date(t.estimateAt) })))
-        setFilteredTasks(newTasks.map(t => ({ ...t, estimateAt: new Date(t.estimateAt) })))
-        // setTasks(tasks)
-      }
-    }
+  // React.useEffect(() => {
+  //   const getTasks = async () => {
+  //     const newTasks: ITask[] = await AsyncStorage.getItem("tasks").then(res => res ? JSON.parse(res) : [])
+  //     if (!newTasks.length) return setTasks(data)
+  //     console.log(newTasks)
+  //     if (tasks.length) {
+  //       // console.log(tasks.map(t => ({ ...t, estimateAt: new Date(t.estimateAt) })))
+  //       setFilteredTasks(newTasks.map(t => ({ ...t, estimateAt: new Date(t.estimateAt) })))
+  //       // setTasks(tasks)
+  //     }
+  //   }
 
-    getTasks()
+  //   getTasks()
 
-  }, [])
+  // }, [])
 
   return (
     <Container>
