@@ -17,12 +17,10 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "removeComments": true,
+    "noImplicitAny": false,
   },
   "include": [
     "src/**/*",
-    "@types/**/*",
-    "config/**/*",
-    "knexfile.ts",
   ],
   "exclude": [
     "node_modules",
