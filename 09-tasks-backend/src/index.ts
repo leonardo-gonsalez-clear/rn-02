@@ -2,17 +2,18 @@ import Express from "express";
 import cors from "cors";
 import routes from "./routes";
 import { db2 } from "./config/db";
-import "express-async-errors"
 import "dotenv/config"
 import "reflect-metadata"
+import passport from "passport";
 
 const app = Express();
 
 app.use(cors({ origin: "*" }))
 app.use(Express.json())
 app.use(Express.urlencoded({ extended: true }))
+app.use(passport.initialize())
 
-app.use(async (req, res, next) => {
+app.use((req, res, next) => {
   req.app.locals.db = db2
   next()
 })
