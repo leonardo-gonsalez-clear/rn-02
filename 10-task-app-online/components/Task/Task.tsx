@@ -6,6 +6,7 @@ import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import useTasksStore from '../../stores/useTasksStore'
 import Swipeable from "react-native-gesture-handler/Swipeable"
+import { apiAuth } from '../../services/api'
 
 type Props = ITask & {
   onDelete: (id: number | string) => void
@@ -57,11 +58,16 @@ const CheckTask = ({ estimateAt, description, doneAt, id }: ITask) => {
   const tasks = useTasksStore(state => state.tasks)
   const setTasks = useTasksStore(state => state.setTasks)
 
-  const handleCheck = () => {
+  const handleCheck = async () => {
 
-    const checkedTask = tasks.map(t => t.id === id ? { ...t, doneAt: doneAt ? null : new Date() } : t)
-
-    setTasks(checkedTask)
+    try {
+      (await apiAuth()).patch(`/tasks/${id}`)
+      const checkedTask = tasks.map(t => t.id === id ? { ...t, doneAt: doneAt ? null : new Date() } : t)
+      setTasks(checkedTask)
+    }
+    catch (e) {
+      console.log(e)
+    }
   }
 
   return (

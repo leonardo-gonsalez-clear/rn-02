@@ -4,6 +4,7 @@ import { Btn, BtnText, ButtonWrapper, Container, Content, Header, HeaderText, In
 import theme from '../../constants/colors'
 import DateTimePicker from '../../components/DateTimePicker/DateTimePicker'
 import useTasksStore from '../../stores/useTasksStore'
+import { apiAuth } from '../../services/api'
 
 interface Props {
   isVisible: boolean
@@ -16,7 +17,7 @@ const AddTask = ({ isVisible, onClose }: Props) => {
   const tasks = useTasksStore(state => state.tasks)
   const setTasks = useTasksStore(state => state.setTasks)
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
     if (!title.trim()) return
 
     const taskToAdd: ITask = {
@@ -26,10 +27,19 @@ const AddTask = ({ isVisible, onClose }: Props) => {
       doneAt: undefined
     }
 
-    setTasks([...tasks, taskToAdd])
-    setTitle("")
-    setDate(new Date())
-    onClose()
+    try {
+
+      await (await apiAuth()).post('/tasks', taskToAdd)
+      setTasks([...tasks, taskToAdd])
+      setTitle("")
+      setDate(new Date())
+      onClose()
+
+    }
+    catch (e) {
+      console.log(e)
+    }
+
   }
 
   return (
