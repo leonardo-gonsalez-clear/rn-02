@@ -4,3 +4,9 @@ interface ITask {
   estimateAt: Date
   doneAt?: Date | null
 }
+
+declare module "*.jpg" {
+  const value: string;
+  export default value;
+}
+

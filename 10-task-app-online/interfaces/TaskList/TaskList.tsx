@@ -1,80 +1,81 @@
-import { View, Text, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { FlatList, ImageSourcePropType } from 'react-native'
 import { BgImage, Container, Content, IconAdd, IconBar, SubTitle, Title } from './taskList.styled'
-import { endOfDay, format } from 'date-fns'
+import { endOfDay, format, addDays } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import Task from '../../components/Task/Task'
-import useTasksStore, { data } from "../../stores/useTasksStore"
+import useTasksStore from "../../stores/useTasksStore"
 import Octicons from '@expo/vector-icons/Octicons'
 import AddTask from '../AddTask/AddTask'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { apiAuth } from '../../services/api'
+import { useRoute } from '@react-navigation/native'
+import today from '../../assets/images/today.jpg'
+import tomorrow from '../../assets/images/tomorrow.jpg'
+import week from '../../assets/images/week.jpg'
+import month from '../../assets/images/month.jpg'
+import { useFocusEffect } from 'expo-router/src/useFocusEffect'
+import { useRouter } from 'expo-router'
+import { usePathname } from 'expo-router/src/hooks'
 
-const prevTasks = AsyncStorage.getItem("tasks").then(res => res ? JSON.parse(res) : [])
+interface IProps {
+  daysAhead?: number
+}
 
-const TaskList = () => {
+const tabsName = {
+  index: "Hoje",
+  Tomorrow: "Amanhã",
+  Week: "Semana",
+  Month: "Mês"
+}
+
+const images = {
+  index: today,
+  Tomorrow: tomorrow,
+  Week: week,
+  Month: month
+}
+
+const TaskList = ({ daysAhead }: IProps) => {
   const tasks = useTasksStore(state => state.tasks)
   const setTasks = useTasksStore(state => state.setTasks)
   const [tasksVisible, setTasksVisible] = React.useState(false)
   const [modalVisible, setModalVisible] = React.useState(false)
-  const today = format(new Date(), "dd 'de' MMMM", { locale: ptBR })
   const [filteredTasks, setFilteredTasks] = React.useState<ITask[]>(tasks)
+  const router = useRoute()
+  const path = usePathname()
+  const date = format(endOfDay(addDays(new Date(), daysAhead || 0)), "yyyy-MM-dd HH:mm:ss")
 
-  const handleDeleteTask = (id: number | string) => {
-    const filteredTasks = tasks.filter(task => task.id !== id)
-
-    setTasks(filteredTasks)
-  }
-
-  const handleToggleTasks = () => {
-    setTasksVisible(!tasksVisible)
-  }
-
-  React.useEffect(() => {
-    let filteredTasksNew: ITask[] = []
-    if (tasksVisible) {
-      filteredTasksNew = tasks.filter(task => !task.doneAt)
-      setFilteredTasks(filteredTasksNew)
-    } else {
-      filteredTasksNew = tasks
-      console.log(filteredTasks)
-      setFilteredTasks(filteredTasksNew)
-    }
-
-    !filteredTasks.length && AsyncStorage.setItem("tasks", JSON.stringify(filteredTasks)).then(() => console.log("tasks saved"))
-  }, [tasks, tasksVisible])
-
-  const getTasks = async () => {
-    const maxDate = format(endOfDay(new Date()), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
-    console.log(endOfDay(new Date()))
+  const handleDeleteTask = async (id: number | string) => {
     try {
-      const data: ITask[] = await (await apiAuth()).get(`/tasks?date=${maxDate}`).then(res => res.data)
-      console.log(data)
-      setTasks(data)
-    } catch (err) {
-      console.log(err.request)
+      await (await apiAuth()).delete(`tasks/${id}`)
+      const filteredTasks = tasks.filter(task => task.id !== id)
+      setTasks(filteredTasks)
+
+    } catch (e) {
+      console.log(e)
     }
   }
 
+  const handleToggleTasks = async () => {
+    setTasksVisible(!tasksVisible)
+
+  }
+
+  const getTasks = React.useCallback(async () => {
+    try {
+      const data: ITask[] = await (await apiAuth()).get(`/tasks?date=${date}`).then(res => res.data)
+      setTasks(data)
+      console.log("BUSCOU", date)
+    } catch (err) {
+      console.log(err)
+    }
+  }, [date])
+
   React.useEffect(() => {
+    console.log("FOCUS")
     getTasks()
-  }, [])
-
-  // React.useEffect(() => {
-  //   const getTasks = async () => {
-  //     const newTasks: ITask[] = await AsyncStorage.getItem("tasks").then(res => res ? JSON.parse(res) : [])
-  //     if (!newTasks.length) return setTasks(data)
-  //     console.log(newTasks)
-  //     if (tasks.length) {
-  //       // console.log(tasks.map(t => ({ ...t, estimateAt: new Date(t.estimateAt) })))
-  //       setFilteredTasks(newTasks.map(t => ({ ...t, estimateAt: new Date(t.estimateAt) })))
-  //       // setTasks(tasks)
-  //     }
-  //   }
-
-  //   getTasks()
-
-  // }, [])
+  }, [path])
 
   return (
     <Container>
@@ -82,19 +83,19 @@ const TaskList = () => {
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
       />
-      <BgImage source={require("../../assets/images/today.jpg")}>
+      <BgImage source={images[router.name as keyof typeof images] as ImageSourcePropType}>
         <IconBar onPress={handleToggleTasks}>
           <Octicons
             name={tasksVisible ? "eye-closed" : "eye"}
             size={20}
             color={"#FFF"} />
         </IconBar>
-        <SubTitle>Hoje</SubTitle>
-        <Title>{today}</Title>
+        <SubTitle>{tabsName[router.name as keyof typeof tabsName]}</SubTitle>
+        <Title>{format(new Date(date), "EEEEEE, dd 'de' MMMM", { locale: ptBR })}</Title>
       </BgImage>
       <Content style={{ flex: 7 }}>
         <FlatList
-          data={filteredTasks}
+          data={tasks}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => <Task {...item} onDelete={handleDeleteTask} />} />
       </Content>

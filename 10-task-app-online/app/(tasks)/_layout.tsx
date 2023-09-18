@@ -6,9 +6,12 @@ import { Drawer } from "expo-router/drawer"
 
 const _layout = () => {
   return (
-    <Tabs>
-      <Tabs.Screen name='index' options={{ title: "Hoje" }} />
-    </Tabs>
+    <Drawer>
+      <Drawer.Screen name='index' options={{ title: "Hoje" }} />
+      <Drawer.Screen name='Tomorrow' options={{ title: "Amanhã" }} />
+      <Drawer.Screen name='Week' options={{ title: "Semana" }} />
+      <Drawer.Screen name='Month' options={{ title: "Mês" }} />
+    </Drawer>
   )
 }
 
