@@ -74,6 +74,17 @@ class TasksController {
 
     return res.status(200).json(doneTask)
   }
+
+  async deleteTask(req: Request, res: Response) {
+    const { id } = req.params
+
+    if (!req.user) return res.status(401).json({ error: "unauthorized" })
+
+    await db2.delete().from("tasks").where({ id, userId: req.user.id })
+
+    return res.sendStatus(201)
+  }
+
 }
 
 export default new TasksController()

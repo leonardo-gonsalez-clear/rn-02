@@ -15,5 +15,6 @@ routes.get("/tasks", passport.authenticate(), TasksController.index)
 routes.post("/tasks", passport.authenticate(), TasksController.store)
 routes.put("/tasks/:id", passport.authenticate(), TasksController.updateTask)
 routes.patch("/tasks/:id", passport.authenticate(), TasksController.doneTask)
+routes.delete("/tasks/:id", passport.authenticate(), TasksController.deleteTask)
 
 export default routes
