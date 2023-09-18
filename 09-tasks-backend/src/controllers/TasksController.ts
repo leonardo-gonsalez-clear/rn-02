@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { endOfDay } from "date-fns"
+import { endOfDay, format } from "date-fns"
 import { db2 } from '../config/db'
 import { ITask } from 'src/@types/global'
 
@@ -9,7 +9,7 @@ class TasksController {
     if (!req.user) return res.status(401).json({ error: "unauthorized" })
 
     const date = req.query.date
-      ? req.query.date
+      ? format(new Date(req.query.date as string), "yyyy-MM-dd")
       : endOfDay(new Date())
 
     const tasks: ITask[] = await db2("tasks")
