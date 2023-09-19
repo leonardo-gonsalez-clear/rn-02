@@ -23,9 +23,9 @@ const Login = () => {
     api.post("/signin", data)
       .then(async (res) => {
         const user: IUser & { token: string } = res.data
+        setUser(user)
         await AsyncStorage.setItem("token", user.token)
         router.push("/(tasks)/")
-        setUser(user)
         setData({ ...initialData })
       })
       .catch((err) => {
