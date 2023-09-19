@@ -32,6 +32,7 @@
     "react-native-screens": "~3.22.0",
     "react-native-user-avatar": "^1.0.8",
     "react-native-web": "~0.19.6",
+    "styled-components": "^6.0.8",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
