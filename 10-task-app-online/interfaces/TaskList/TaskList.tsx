@@ -57,6 +57,10 @@ const TaskList = ({ daysAhead }: IProps) => {
     }
   }
 
+  const tasksFilter = React.useMemo(() => {
+    return filteredTasks.filter(task => !task.doneAt)
+  }, [tasksVisible, tasks, filteredTasks])
+
   const handleToggleTasks = async () => {
     setTasksVisible(!tasksVisible)
 
@@ -75,7 +79,7 @@ const TaskList = ({ daysAhead }: IProps) => {
   React.useEffect(() => {
     console.log("FOCUS")
     getTasks()
-  }, [path])
+  }, [tasks])
 
   return (
     <Container>
@@ -95,7 +99,7 @@ const TaskList = ({ daysAhead }: IProps) => {
       </BgImage>
       <Content style={{ flex: 7 }}>
         <FlatList
-          data={filteredTasks}
+          data={!tasksVisible ? filteredTasks : tasksFilter}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => <Task {...item} onDelete={handleDeleteTask} />} />
       </Content>

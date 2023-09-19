@@ -59,6 +59,7 @@ const CheckTask = ({ estimateAt, description, doneAt, id }: ITask) => {
   const setTasks = useTasksStore(state => state.setTasks)
 
   const handleCheck = async () => {
+    console.log("CHECK")
 
     try {
       (await apiAuth()).patch(`/tasks/${id}`)
