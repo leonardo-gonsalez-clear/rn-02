@@ -5,6 +5,7 @@ import { Input } from '../../../interfaces/AddTask/addTask.styled'
 import { useRouter } from 'expo-router'
 import { api } from '../../../services/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import useUserStore from '../../../stores/useUserStore'
 
 const initialData = {
   email: "",
@@ -14,15 +15,17 @@ const initialData = {
 const Login = () => {
   const [data, setData] = React.useState({ ...initialData })
   const router = useRouter()
+  const setUser = useUserStore(state => state.setUser)
 
   const handleLogin = () => {
     console.log(data)
 
     api.post("/signin", data)
       .then(async (res) => {
-        console.log(res.data.token)
-        await AsyncStorage.setItem("token", res.data.token)
+        const user: IUser & { token: string } = res.data
+        await AsyncStorage.setItem("token", user.token)
         router.push("/(tasks)/")
+        setUser(user)
         setData({ ...initialData })
       })
       .catch((err) => {

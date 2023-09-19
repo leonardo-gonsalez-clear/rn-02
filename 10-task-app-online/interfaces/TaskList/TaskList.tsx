@@ -65,7 +65,7 @@ const TaskList = ({ daysAhead }: IProps) => {
   const getTasks = React.useCallback(async () => {
     try {
       const data: ITask[] = await (await apiAuth()).get(`/tasks?date=${date}`).then(res => res.data)
-      setTasks(data)
+      setFilteredTasks(data)
       console.log("BUSCOU", date)
     } catch (err) {
       console.log(err)
@@ -95,7 +95,7 @@ const TaskList = ({ daysAhead }: IProps) => {
       </BgImage>
       <Content style={{ flex: 7 }}>
         <FlatList
-          data={tasks}
+          data={filteredTasks}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => <Task {...item} onDelete={handleDeleteTask} />} />
       </Content>
