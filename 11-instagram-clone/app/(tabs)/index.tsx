@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import Header from '../../components/Header/Header';
 import Post from '../../components/Post/Post';
+import Feed from '../../interfaces/Feed/Feed';
 
 
 export default function TabOneScreen() {
@@ -20,11 +21,7 @@ export default function TabOneScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Post
-        image={require("../../assets/images/boat.jpg")}
-        user={user}
-        comments={comments}
-      />
+      <Feed />
     </View >
   )
 }

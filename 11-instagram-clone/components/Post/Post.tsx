@@ -3,25 +3,19 @@ import React from 'react'
 import { Container } from './post.styled'
 import Author from '../Author/Author'
 import Comments from '../Comments/Comments'
+import AddComment from '../AddCommment/AddComment'
 
-interface Props {
-  image: ImageSourcePropType
-  user: {
-    name: string
-    avatar: string
-  },
-  comments: IComment[]
-}
 
-const Post = ({ image, user, comments }: Props) => {
+const Post = ({ image, comments, email, name, avatarUrl }: IPost) => {
   const width = Dimensions.get('window').width
   const height = Dimensions.get('window').height * 0.35
 
   return (
     <Container>
       <Image source={image} resizeMode='contain' style={{ height, width }} />
-      <Author avatar={user.avatar} name={user.name} />
-      <Comments comments={comments} />
+      <Author avatar={avatarUrl} name={name} />
+      <Comments comments={comments || []} />
+      <AddComment />
     </Container>
   )
 }
