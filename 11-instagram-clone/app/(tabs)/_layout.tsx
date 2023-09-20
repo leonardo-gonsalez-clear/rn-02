@@ -27,11 +27,28 @@ export default function TabLayout() {
       >
         <Tabs.Screen
           name="index"
-
           options={{
             tabBarShowLabel: false,
             tabBarIcon: ({ size, color }) =>
               <Octicons name='home' size={size} color={color} />
+
+          }}
+        />
+        <Tabs.Screen
+          name='Add'
+          options={{
+            tabBarShowLabel: false,
+            tabBarIcon: ({ size, color }) =>
+              <Octicons name='device-camera' size={size} color={color} />
+
+          }}
+        />
+        <Tabs.Screen
+          name='Profile'
+          options={{
+            tabBarShowLabel: false,
+            tabBarIcon: ({ size, color }) =>
+              <Octicons name='person' size={size} color={color} />
 
           }}
         />
