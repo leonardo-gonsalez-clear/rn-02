@@ -6,7 +6,7 @@ import Comments from '../Comments/Comments'
 import AddComment from '../AddCommment/AddComment'
 
 
-const Post = ({ image, comments, email, name, avatarUrl }: IPost) => {
+const Post = ({ image, comments, email, name, avatarUrl, id }: IPost) => {
   const width = Dimensions.get('window').width
   const height = Dimensions.get('window').height * 0.35
 
@@ -15,7 +15,7 @@ const Post = ({ image, comments, email, name, avatarUrl }: IPost) => {
       <Image source={image} resizeMode='cover' style={{ height, width }} />
       <Author avatar={avatarUrl} name={name} />
       <Comments comments={comments || []} />
-      <AddComment />
+      <AddComment postId={Number(id)} />
     </Container>
   )
 }

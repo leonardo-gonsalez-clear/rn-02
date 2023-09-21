@@ -26,11 +26,27 @@ const posts: IPost[] = [
 interface Props {
   posts: IPost[]
   setPosts: (posts: IPost[]) => void
+  addComment: (comment: IComment, postId: number) => void
 }
 
 const usePostStore = create<Props>((set) => ({
   posts: posts,
   setPosts: (posts) => set({ posts }),
+  addComment: (comment: IComment, postId: number) => {
+    const post = posts.find(post => post.id === postId)
+    console.log(post)
+
+    const newPosts = posts.map(post => {
+      if (post.id === postId) {
+        return { ...post, comments: [...post.comments, comment] }
+      } else {
+        return post
+      }
+    })
+
+    set({ posts: newPosts })
+  }
+
 }))
 
 export default usePostStore

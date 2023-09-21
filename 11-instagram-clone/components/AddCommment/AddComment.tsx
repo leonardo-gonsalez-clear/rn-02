@@ -3,13 +3,27 @@ import React from 'react'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { Octicons } from '@expo/vector-icons'
 import { Caption, Container, Input } from './addComment.styled'
+import usePostStore from '../../stores/usePostStore'
+import useUserStore from '../../stores/useUserStore'
 
-const AddComment = () => {
+interface Props {
+  postId: number
+}
+
+const AddComment = ({ postId }: Props) => {
   const [comment, setComment] = React.useState('')
   const [editMode, setEditMode] = React.useState(false)
+  const addComment = usePostStore(state => state.addComment)
+  const user = useUserStore(state => state.user)
 
   const handleAddComment = () => {
+    if (!comment || !user) return
 
+    console.log('adding comment')
+
+    addComment({ name: user.name, comment }, postId)
+    setComment('')
+    setEditMode(false)
   }
 
   if (editMode) return (
