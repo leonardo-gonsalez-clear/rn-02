@@ -5,13 +5,18 @@ background-color: #fff;
 padding-top: 20px;
 border-bottom-width: 1px;
 border-color: #bbb;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 8px;
+padding-top: 30px;
 `
 
 export const Content = styled.View`
   flex-direction: row;
   align-items: end;
   gap: 8px;
-  padding: 8px;
 `
 
 export const Title = styled.Text`
@@ -20,3 +25,5 @@ export const Title = styled.Text`
   font-family: "Shelter";
   line-height: 40px;
 `
+
+export const User = styled.View``
