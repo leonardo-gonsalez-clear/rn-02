@@ -17,3 +17,9 @@ interface IPost {
   image: ImageSourcePropType
   comments?: IComment[]
 }
+
+interface IUser {
+  name: string
+  email: string
+  avatarUrl: string
+}
