@@ -12,7 +12,7 @@ const Post = ({ image, comments, email, name, avatarUrl }: IPost) => {
 
   return (
     <Container>
-      <Image source={image} resizeMode='contain' style={{ height, width }} />
+      <Image source={image} resizeMode='cover' style={{ height, width }} />
       <Author avatar={avatarUrl} name={name} />
       <Comments comments={comments || []} />
       <AddComment />

@@ -2,6 +2,9 @@ import { View, Text, TouchableOpacity, TextInput, Image, Dimensions, Platform, S
 import React from 'react'
 import * as ImagePicker from 'expo-image-picker';
 import { Container, ImageContainer, Input, PickImage, PickImageText, Submit, SubmitText, Title } from './addPhoto.styled';
+import usePostStore from '../../stores/usePostStore';
+import useUserStore from '../../stores/useUserStore';
+import { useRouter } from 'expo-router';
 
 interface IImage {
   uri: string
@@ -12,6 +15,10 @@ const AddPhoto = () => {
   const [image, setImage] = React.useState<IImage | null>(null)
   const [comment, setComment] = React.useState('')
   const height = Dimensions.get("window").width * 3 / 4
+  const setPosts = usePostStore(state => state.setPosts)
+  const posts = usePostStore(state => state.posts)
+  const user = useUserStore(state => state.user)
+  const router = useRouter()
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -33,7 +40,26 @@ const AddPhoto = () => {
   }
 
   const handleSubmit = () => {
-    Alert.alert("Imagem adicionada", comment)
+    if (!image || !user) return
+
+    const newPost: IPost = {
+      id: posts.length + 1,
+      avatarUrl: user.avatarUrl || "",
+      image: image || "",
+      email: user.email,
+      name: user.name,
+      comments: comment ? [{
+        name: user.name,
+        comment,
+      }] : []
+    }
+
+    setPosts([newPost, ...posts])
+
+    setImage(null)
+    setComment("")
+
+    router.push("/")
   }
 
 
