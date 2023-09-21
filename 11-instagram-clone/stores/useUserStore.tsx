@@ -12,3 +12,4 @@ const useUserStore = create<Props>((set) => ({
   logout: () => set({ user: null }),
 }))
 
+export default useUserStore

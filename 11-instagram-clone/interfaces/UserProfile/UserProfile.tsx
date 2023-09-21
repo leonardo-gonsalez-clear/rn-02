@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { Avatar, Container, Email, LogOut, LogOutText, Name } from './userProfile.styled'
+import useUserStore from '../../stores/useUserStore'
 
 const user = {
   email: "leonardo@gmail.com",
@@ -9,16 +10,15 @@ const user = {
 }
 
 const UserProfile = () => {
+  const logOut = useUserStore(state => state.logout)
+  const user = useUserStore(state => state.user)
 
-  const logOut = () => {
-
-  }
-
+  if (!user) return null
   return (
     <Container>
-      <Avatar source={{ uri: user.avatarUrl }} />
-      <Name>Fulano de tal</Name>
-      <Email>leonardo@gmail.com</Email>
+      <Avatar source={{ uri: user?.avatarUrl }} />
+      <Name>{user?.name}</Name>
+      <Email>{user?.email}</Email>
 
       <LogOut onPress={logOut}>
         <LogOutText>Sair</LogOutText>
