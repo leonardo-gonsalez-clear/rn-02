@@ -21,6 +21,8 @@ const AddPhoto = () => {
   const router = useRouter()
 
   const pickImage = async () => {
+    if (!user) return Alert.alert("Você precisa estar logado para adicionar uma foto")
+
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
       alert('Desculpe, precisamos da permissão para acessar a câmera!');
@@ -40,7 +42,7 @@ const AddPhoto = () => {
   }
 
   const handleSubmit = () => {
-    if (!image || !user) return
+    if (!image || !user) return Alert.alert("Você precisa estar logado e adicionar uma foto")
 
     const newPost: IPost = {
       id: posts.length + 1,
