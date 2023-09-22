@@ -11,10 +11,11 @@ const Post = ({ image, comments, email, name, avatarUrl, id }: IPost) => {
   const width = Dimensions.get('window').width
   const height = Dimensions.get('window').height * 0.35
   const user = useUserStore((state) => state.user)
+  const imageSource = typeof image === "string" ? { uri: image } : image
 
   return (
     <Container>
-      <Image source={image} resizeMode='cover' style={{ height, width }} />
+      <Image source={imageSource} resizeMode='cover' style={{ height, width }} />
       <Author avatar={avatarUrl} name={name} />
       <Comments comments={comments || []} />
       {user && <AddComment postId={Number(id)} />}

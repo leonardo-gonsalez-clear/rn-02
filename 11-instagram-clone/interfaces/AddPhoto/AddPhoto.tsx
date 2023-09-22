@@ -60,7 +60,7 @@ const AddPhoto = () => {
     const newPost: IPost = {
       id,
       avatarUrl: user.avatarUrl || "",
-      image: image || "",
+      image: `https://firebasestorage.googleapis.com/v0/b/lambe-a52d9.appspot.com/o/posts%2F${id}?alt=media`,
       email: user.email,
       name: user.name,
       comments: comment ? [{
