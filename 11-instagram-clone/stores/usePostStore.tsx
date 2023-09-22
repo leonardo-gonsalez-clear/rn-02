@@ -30,13 +30,18 @@ const posts: IPost[] = [
 interface Props {
   posts: IPost[]
   setPosts: (posts: IPost[]) => void
+  getPosts: () => void
   addComment: (comment: IComment, postId: number) => void
 }
 
 const usePostStore = create<Props>((set) => ({
-  posts: posts,
+  posts: [],
   setPosts: async (posts) => {
     await setDb(ref(db, "posts"), posts)
+    set({ posts })
+  },
+  getPosts: async () => {
+    const posts = await get(ref(db, "posts")).then((snapshot) => snapshot.val())
     set({ posts })
   },
   addComment: (comment: IComment, postId: number) => {

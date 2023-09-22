@@ -8,10 +8,11 @@ interface Props {
 }
 
 const Author = ({ name, avatar }: Props) => {
+  const anonAvatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
   return (
     <Container>
       <Avatar
-        source={{ uri: avatar }}
+        source={{ uri: avatar || anonAvatar }}
         style={{ borderColor: "#2223", borderWidth: 1 }} />
       <Name>{name}</Name>
     </Container>

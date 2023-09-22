@@ -7,6 +7,11 @@ import usePostStore from '../../stores/usePostStore'
 
 const Feed = () => {
   const posts = usePostStore(state => state.posts)
+  const getPosts = usePostStore(state => state.getPosts)
+
+  React.useEffect(() => {
+    getPosts()
+  }, [])
 
   return (
     <View>
