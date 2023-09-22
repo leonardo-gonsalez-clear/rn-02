@@ -19,8 +19,6 @@ const AddComment = ({ postId }: Props) => {
   const handleAddComment = () => {
     if (!comment || !user) return
 
-    console.log('adding comment')
-
     addComment({ name: user.name, comment }, postId)
     setComment('')
     setEditMode(false)
