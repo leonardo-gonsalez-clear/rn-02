@@ -49,6 +49,11 @@ export const Submit = styled.TouchableOpacity`
   margin-top: 10px;
   border-radius: 4px;
   width: 100%;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
 `
 
 export const SubmitText = styled.Text`

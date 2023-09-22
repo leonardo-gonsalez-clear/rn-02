@@ -7,6 +7,7 @@ import useUserStore from '../../stores/useUserStore';
 import { useRouter } from 'expo-router';
 import { uploadBytes, ref as refStorage } from 'firebase/storage';
 import { storage } from '../../services/firebase';
+import { ActivityIndicator } from 'react-native';
 
 interface IImage {
   uri: string
@@ -16,6 +17,7 @@ interface IImage {
 const AddPhoto = () => {
   const [image, setImage] = React.useState<IImage | null>(null)
   const [comment, setComment] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
   const height = Dimensions.get("window").width * 3 / 4
   const setPosts = usePostStore(state => state.setPosts)
   const posts = usePostStore(state => state.posts)
@@ -45,6 +47,7 @@ const AddPhoto = () => {
   }
 
   const handleSubmit = async () => {
+    setLoading(true)
     if (!image || !user) return Alert.alert("Você precisa estar logado e adicionar uma foto")
 
     const id = posts.length + 1
@@ -69,14 +72,13 @@ const AddPhoto = () => {
       }] : []
     }
 
-    setPosts([newPost, ...posts])
+    await setPosts([newPost, ...posts])
+    setLoading(false)
 
     setImage(null)
     setComment("")
-
     router.push("/")
   }
-
 
   return (
     <ScrollView>
@@ -103,8 +105,10 @@ const AddPhoto = () => {
           onChangeText={setComment}
         />
 
-        <Submit onPress={handleSubmit}>
-          <SubmitText>Compartilhar</SubmitText>
+        <Submit onPress={handleSubmit} disabled={loading}>
+          <SubmitText>{loading ? (
+            <ActivityIndicator size={24} color={"#212121"} />
+          ) : "Compartilhar"}</SubmitText>
         </Submit>
 
       </Container>

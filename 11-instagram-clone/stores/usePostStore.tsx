@@ -29,7 +29,7 @@ const posts: IPost[] = [
 
 interface Props {
   posts: IPost[]
-  setPosts: (posts: IPost[]) => void
+  setPosts: (posts: IPost[]) => Promise<void>
   getPosts: () => void
   addComment: (comment: IComment, postId: number) => void
 }
