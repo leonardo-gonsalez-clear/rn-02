@@ -5,6 +5,8 @@ import { Container, ImageContainer, Input, PickImage, PickImageText, Submit, Sub
 import usePostStore from '../../stores/usePostStore';
 import useUserStore from '../../stores/useUserStore';
 import { useRouter } from 'expo-router';
+import { uploadBytes, ref as refStorage } from 'firebase/storage';
+import { storage } from '../../services/firebase';
 
 interface IImage {
   uri: string
@@ -19,6 +21,7 @@ const AddPhoto = () => {
   const posts = usePostStore(state => state.posts)
   const user = useUserStore(state => state.user)
   const router = useRouter()
+
 
   const pickImage = async () => {
     if (!user) return Alert.alert("Você precisa estar logado para adicionar uma foto")
@@ -41,11 +44,21 @@ const AddPhoto = () => {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!image || !user) return Alert.alert("Você precisa estar logado e adicionar uma foto")
 
+    const id = posts.length + 1
+    const b64Image = `data:application/octet-stream;base64,${image.base64}`
+
+    const file = await fetch(`file://${image.uri}`).then(res => res.blob())
+
+    await uploadBytes(refStorage(storage, `posts/${id}`), file, { contentType: "image/jpeg" })
+      .then((snapshot) => {
+        console.log(snapshot.ref)
+      })
+
     const newPost: IPost = {
-      id: posts.length + 1,
+      id,
       avatarUrl: user.avatarUrl || "",
       image: image || "",
       email: user.email,

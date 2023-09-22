@@ -1,4 +1,8 @@
 import { create } from 'zustand'
+import api from '../services/api'
+import { db, storage } from '../services/firebase'
+import { ref, get, set as setDb } from 'firebase/database'
+import { ref as refStorage, uploadString, getDownloadURL } from 'firebase/storage'
 
 const posts: IPost[] = [
   {
@@ -31,7 +35,10 @@ interface Props {
 
 const usePostStore = create<Props>((set) => ({
   posts: posts,
-  setPosts: (posts) => set({ posts }),
+  setPosts: async (posts) => {
+    await setDb(ref(db, "posts"), posts)
+    set({ posts })
+  },
   addComment: (comment: IComment, postId: number) => {
     const post = posts.find(post => post.id === postId)
     console.log(post)
