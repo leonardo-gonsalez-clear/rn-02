@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { Input, ButtonText, Button, Container } from "../Login/login.styled"
 import useUserStore from '../../stores/useUserStore'
@@ -9,6 +9,7 @@ const Register = () => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const createUser = useUserStore(state => state.createUser)
+  const loading = useUserStore(state => state.loading)
   const router = useRouter()
 
   const handleSubmit = async () => {
@@ -40,7 +41,9 @@ const Register = () => {
       />
 
       <Button onPress={handleSubmit}>
-        <ButtonText>Registrar</ButtonText>
+        <ButtonText>
+          {loading ? <ActivityIndicator color="#212121" size={24} /> : "Registrar"}
+        </ButtonText>
       </Button>
     </Container>
   )
