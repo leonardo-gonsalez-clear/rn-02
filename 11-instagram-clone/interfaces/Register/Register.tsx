@@ -8,15 +8,13 @@ const Register = () => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-  const setUser = useUserStore(state => state.setUser)
+  const createUser = useUserStore(state => state.createUser)
   const router = useRouter()
 
-  const handleSubmit = () => {
-    setUser({
-      name,
-      email,
-      avatarUrl: ""
-    })
+  const handleSubmit = async () => {
+    if (!email || !password || !name) return
+
+    await createUser(name, email, password)
 
     router.push("/Profile")
   }
