@@ -36,7 +36,6 @@ const usePostStore = create<Props>((set, get) => ({
 
     set({ posts: newPosts })
   }
-
 }))
 
 export default usePostStore

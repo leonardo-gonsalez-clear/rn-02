@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text, ActivityIndicator, Alert } from 'react-native'
 import React from 'react'
 import { Input, ButtonText, Button, Container } from "../Login/login.styled"
 import useUserStore from '../../stores/useUserStore'
@@ -9,6 +9,7 @@ const Register = () => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const createUser = useUserStore(state => state.createUser)
+  const signInUser = useUserStore(state => state.signIn)
   const loading = useUserStore(state => state.loading)
   const router = useRouter()
 
@@ -17,7 +18,13 @@ const Register = () => {
 
     await createUser(name, email, password)
 
-    router.push("/Profile")
+    await signInUser(email, password)
+      .then(() => {
+        router.push("/(1-tabs)/")
+      })
+      .catch(() => {
+        Alert.alert("Erro", "Não foi possível fazer o login")
+      })
   }
 
   return (
