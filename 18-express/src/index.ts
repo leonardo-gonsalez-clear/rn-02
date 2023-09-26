@@ -1,4 +1,5 @@
 import Express from "express"
+import middleware from "./mid"
 
 const app = Express()
 
@@ -10,6 +11,8 @@ app.get("/", (req, res) => {
 <p>My name is <strong>John</strong></p>
 `)
 })
+
+app.use(middleware)
 
 app.post("/", (req, res) => {
   const { name } = req.body
